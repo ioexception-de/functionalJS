@@ -32,7 +32,73 @@ Using functionalJS in node.js is equally easy:
 
 ## The Functional Object
 
-    
+The Functional Object provides a functional equivalent to Javascript's `Function()` constructor.
+
+### Constructor: new Functional()
+The constructor takes the knowledge database for this functional, which will be examined in the order listed here. As it's not possible to specify a name like in the `function xyz()` constructor, you can simply name it by provide a string in the arguments list, like `var test = new Functional('test', ...)`.
+
+The other arguments should be the knowledge database for this function. Make sure to note the order as it's important for a correct solution. Each pattern entry can be provided by an array. The last array element specifies the returning value or the function to call. Strings in the arguments list will be automatically detected as variable names, `[]` matches an empty list, `[x:xs]` (or other variable names) matches every non-empty list.
+
+Valid entries for the knowledge database would be:
+
+- `[0, 1]` (matches exactly `0` and returns `1`)
+- `["n", function(n) { return n+1; }]` (matches any number and returns it's successor)
+- `["[]", 0]` (matches an empty list and returns `0`)
+- `["[x:xs]", function(x, xs) { return ...; }]` (matches any non-empty list)
+- `["[a:b:rest]", function (a, b, rest) { return ...; }]` (matches any list with at least two elements)
+- `function(a, b) { return a+b; }` (matches all)
+
+As you can see in the last example it's also possible to provide a function instead of an array for the knowledge database, then it will automatically create an equivalent entry with `["a", "b", function(a, b) {...}]`.
+
+Correct constructor calls would be:
+
+    foldr = new Functional("foldr",
+                ["f", "i", "[]", function(f, i) { return i; }],
+		["f", "i", "[x:xs]", function(f, i, x, xs) { return f(x, foldr(f, i, xs)); }]
+    );
+
+    fibonacci = new Functional("fibonacci",
+
+                [0, 0],
+
+                [1, 1],
+
+                function(n) { return fibonacci(n-1)+fibonacci(n-2); }
+
+    );
+
+### Evaluation
+
+You can use your own and the predefined functions simply like a function
+
+    mult(-3, 4) // results in -12
+
+One of the best thing about functional programming language is that you can evaluate all functionals particularly. So the default functional `sum` is defined very easy:
+
+    sum = foldr(add, 0) // results in a particular function which expects just a list
+
+With particular evalutation it's easy to reuse your functions or to use the default ones:
+
+    until(greaterthanRe(80), mult(2), 1) // results in 128, greaterthanRe(80) and mult(2) are particular functionals
+
+### Special operations
+
+It's also possible to manipulate the knowledge database of an already existing Functional. With special keywords is also possible to get it's name and it's whole knownledge database. You can execute the special operations just by call the keywords instead of the evaluation, e.g. 
+
+    mult('__list')
+
+- __list - returns the current knowledge database
+- __name - returns the name of this Functional if specified with the Constructor
+- __add - adds new entries to the knowledge database at the end
+- __addOnTop - adds new entries to the end of the knowledge database
+
+A valid extending operation would be:
+
+    mult('__addOnTop', 
+        [1, 1, 42],            // mult(1,1) now returns 42
+        [3, 1, 3.1415926535]   // mult(3,1) now returns Pi
+    );
+
 ## Default functions
 
 You can load the default functions globally by using `loadDefaults()` or additionally in node.js by assigning it to a variable with `var f = fctl.defaults()`.
