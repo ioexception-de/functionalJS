@@ -79,8 +79,6 @@ Non-commutative function of `greaterthan`, so `greaterthanRe(0)` results in a pa
 
 ## ToDo:
 
-slides.js
-
 - implement tuples
 
 ## License
