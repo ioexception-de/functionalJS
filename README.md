@@ -41,45 +41,59 @@ The default functions are influenced by syntax and naming by the [Haskell Prelud
 
 All functions with two parameters which aren't commutative have an equivalent which's name is ending with "Re". These functions do the same but with transposed parameters as in particular use cases, like `lessthan(0)` you want to check something like `x<0`. But the particular usage of `lessthan` results in `0<x`, so you can use the "Re"-function.
 
-### and :: Bool -> Bool -> Bool
+### Bool operations
+- and :: Bool -> Bool -> Bool
+- or :: Bool -> Bool -> Bool
 
-### or :: Bool -> Bool -> Bool
+### Number operations
+- lessthan :: (Number a) => a -> a -> Bool
+- lessthanRe :: (Number a) => a -> a -> Bool
+- lessequal :: (Number a) => a -> a -> Bool
+- lessequalRe :: (Number a) => a -> a -> Bool
+- equal :: a -> a -> Bool
+- equalRe :: a -> a -> Bool
+- greaterequal :: (Number a) => a -> a -> Bool
+- greaterequalRe :: (Number a) => a -> a -> Bool
+- greaterthan :: (Number a) => a -> a -> Bool
+- greaterthanRe :: (Number a) => a -> a -> Bool
+- abs :: (Number a) => a -> a
+- signum :: (Number a) => a -> a
+- add :: (Number a) => a -> a -> a
+- sub :: (Number a) => a -> a -> a
+- subRe :: (Number a) => a -> a -> a
+- mult :: (Number a) => a -> a -> a
+- ratio :: (Number a) => a -> a -> a
+- ratioRe :: (Number a) => a -> a -> a
+- div :: (Int a) => a -> a -> a
+- divRe :: (Int a) => a -> a -> a
+- modRe :: (Int a) => a -> a -> a
 
-### lessthan :: (Number a) => a -> a -> Bool
-
-### lessthanRe :: (Number a) => a -> a -> Bool
-
-Non-commutative function of `lessthan`, so `lessthanRe(0)` results in a particular function which checks if a number is less than 0.
-
-### lessequal :: (Number a) => a -> a -> Bool
-
-### lessequalRe :: (Number a) => a -> a -> Bool
-
-Non-commutative function of `lessequal`, so `lessequalRe(0)` results in a particular function which checks if a number is less or equal 0.
-
-### equal :: a -> a -> Bool
-
-### equalRe :: a -> a -> Bool
-
-Alias for `equal`. As the equal function is commutative, it's not necessary, but because all comparisons have an "Re" equivalent, this alias is defined.
-
-### greaterequal :: (Number a) => a -> a -> Bool
-
-### greaterequalRe :: (Number a) => a -> a -> Bool
-
-Non-commutative function of `greaterequal`, so `greaterequalRe(0)` results in a particular function which checks if a number is greater or equal 0.
-
-### greaterthan :: (Number a) => a -> a -> Bool
-
-### greaterthanRe :: (Number a) => a -> a -> Bool
-
-Non-commutative function of `greaterthan`, so `greaterthanRe(0)` results in a particular function which checks if a number is greater than 0.
-
-### abs :: (Number a) => a -> a
+### List operations
+- unwords :: (String a) => [a] -> a
+- tail :: [a] -> [a]
+- head :: [a] -> a
+- last :: [a] -> a
+- unshift :: a -> [a] -> [a]
+- push :: a -> [a] -> [a]
+- length :: (Int b) => [a] -> b
+- concat :: [a] -> [a] -> [a]
+- reverse :: [a] -> [a]
+- replicate :: (Int a) => a -> b -> [b]
+- drop :: (Int a) => a -> [b] -> [b]
+- take :: (Int a) => a -> [b] -> [b]
+- takeWhile :: (a -> Bool) -> [a] -> [a]
+- foldr :: (a -> b -> b) -> b -> [a] -> b
+- foldl :: (a -> b -> a) -> a -> [b] -> a
+- sum :: (Number a) => [a] -> a
+- avg :: (Number a) => [a] -> a
+- map :: (a -> b) -> [a] -> [b]
+- all :: (a -> Bool) -> [a] -> Bool
+- any :: (a -> Bool) -> [a] -> Bool
+- until :: (a -> Bool) -> (a -> a) -> a -> a
 
 ## ToDo:
 
-- implement tuples
+- implement tuples and related functions
 
 ## License
 
